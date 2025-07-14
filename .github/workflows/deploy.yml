@@ -5,37 +5,37 @@ on:
   push:
 
 jobs:
-    first_job:
-        runs-on: ubuntu-latest
+  first_job:
+    runs-on: ubuntu-latest
 
-        services:
-            redis:
-                image: redis
-                ports:
-                  - 6379:6379
-        
-        steps:
-          - name: Install redis cli
-            run: sudo apt-get update -y && sudo apt-get install redis-tools -y
-        
-          - name: Test redis
-            run: redis-cli -h localhost -p 6379 ping
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
 
-          - name: Print variable
-            run: echo "${{ secrets.YOUR_DEFINED_SECRET }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-          - name: Checkout
-            uses: actions/setup-node@v4
+      - name: Install redis cli
+        run: sudo apt-get update -y && sudo apt-get install redis-tools -y
 
-          - name: setup
-            uses: actions/setup-node@v4
-            with:
-                node-version: '18' 
+      - name: Test redis
+        run: redis-cli -h localhost -p 6379 ping
 
-          - name: Instalar dependecias
-            run: npm install
 
-          - name: Run test
-            run: npm run test
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Instalar dependencias
+        run: npm install
+        working-directory: .
+
+      - name: Run test
+        run: npm run test
+        working-directory: .
 
 
