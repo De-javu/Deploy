@@ -24,10 +24,15 @@ jobs:
           - name: Print variable
             run: echo "${{ secrets.YOUR_DEFINED_SECRET }}"
 
+          - name: Checkout
+            uses: actions/setup-node@v4
+
           - name: setup
             uses: actions/setup-node@v4
             with:
-                node-version: '18'
+                node-version: '18' 
 
+          - name: Instalar dependecias
+            run: npm install      
 
 
